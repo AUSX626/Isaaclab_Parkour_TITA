@@ -1,0 +1,41 @@
+# runtime/training outputs
+logs/
+outputs/
+runs/
+wandb/
+
+# checkpoints/models/events
+*.pt
+*.pth
+*.ckpt
+*.onnx
+*.jit
+*.engine
+events.out.tfevents.*
+*.tfevents*
+
+# Python/cache/build
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.eggs/
+
+# editor/env/cache
+.git/
+.vscode/
+.idea/
+.cursor/
+.venv/
+venv/
+.env
+.DS_Store
+
+# data/model archives
+Datasets/
+*.zip
+*.tar
+*.tar.gz
+*.7z
+*.rar

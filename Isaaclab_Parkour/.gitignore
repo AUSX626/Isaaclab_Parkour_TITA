@@ -1,0 +1,40 @@
+# Training/runtime outputs
+logs/
+outputs/
+runs/
+wandb/
+
+# Checkpoints and exported models
+*.pt
+*.pth
+*.onnx
+*.jit
+*.engine
+*.ckpt
+*.tfevents*
+events.out.tfevents.*
+
+# Python build/cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+build/
+dist/
+.eggs/
+
+# Local env/editor
+.venv/
+venv/
+.env
+.env.*
+.vscode/
+.idea/
+.DS_Store
+
+# Temporary backups created during debugging
+*.bak
+*.bak_*
+*_bak
+*.tmp
+*.log
