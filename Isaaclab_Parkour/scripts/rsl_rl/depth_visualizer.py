@@ -45,8 +45,13 @@ class DepthVisualizer:
         self.closed = False
 
         self.root.protocol("WM_DELETE_WINDOW", self.close)
-        self.root.bind("<KeyPress>", self._on_key_press)
-        self.root.bind("<KeyRelease>", self._on_key_release)
+        # bind_all + focus_force makes keyboard input much more reliable in VNC.
+        self.root.bind_all("<KeyPress>", self._on_key_press)
+        self.root.bind_all("<KeyRelease>", self._on_key_release)
+        try:
+            self.root.after(200, self.root.focus_force)
+        except Exception:
+            pass
 
     def close(self):
         self.closed = True

@@ -113,19 +113,48 @@ class KeyboardCommand:
 
     def on_key(self, key: str, pressed: bool):
         key = key.lower()
+        key_aliases = {
+            "up": "w",
+            "down": "s",
+            "left": "a",
+            "right": "d",
+            "uparrow": "w",
+            "downarrow": "s",
+            "leftarrow": "a",
+            "rightarrow": "d",
+        }
+        key = key_aliases.get(key, key)
         if pressed:
             self._pressed.add(key)
         else:
             self._pressed.discard(key)
+
         if pressed and key in {"q", "escape"}:
             self.quit = True
-        if pressed and key == "r":
+        elif pressed and key == "r":
             self.reset_requested = True
-        if pressed and key == "g":
+        elif pressed and key == "g":
             self.colormap_toggle_requested = True
-        if pressed and key in {"space", " "}:
+        elif pressed and key in {"space", " "}:
             self.vx = 0.0
             self.yaw = 0.0
+            self._print_command("stop")
+        elif pressed and key == "w":
+            # Apply one increment immediately, so a quick tap works even if press/release happen between sim steps.
+            self.vx = min(args_cli.max_vx, self.vx + args_cli.vx_step)
+            self._print_command("forward")
+        elif pressed and key == "s":
+            self.vx = max(-args_cli.max_vx, self.vx - args_cli.vx_step)
+            self._print_command("backward")
+        elif pressed and key == "a":
+            self.yaw = min(1.0, self.yaw + args_cli.yaw_step)
+            self._print_command("turn_left")
+        elif pressed and key == "d":
+            self.yaw = max(-1.0, self.yaw - args_cli.yaw_step)
+            self._print_command("turn_right")
+
+    def _print_command(self, source: str):
+        print(f"[INFO] keyboard {source}: vx={self.vx:.2f}, yaw={self.yaw:.2f}", flush=True)
 
     def update(self):
         if "w" in self._pressed:
